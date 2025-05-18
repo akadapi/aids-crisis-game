@@ -1,72 +1,106 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Silence = Death</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silence = Death: Choices in a Crisis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #eee;
+      font-family: 'Roboto', sans-serif;
+      background-color: #0d0d0d;
+      color: #f0f0f0;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    .container {
-      max-width: 600px;
-      margin: auto;
+    .game-container {
+      background-color: #1c1c1c;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 700px;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+    }
+    h1 {
+      text-align: center;
+      color: #ff3366;
     }
     .stats {
+      display: flex;
+      justify-content: space-between;
       margin-bottom: 20px;
       font-size: 14px;
+      background: #292929;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .scene {
+      margin-bottom: 20px;
+      font-size: 18px;
     }
     .choices button {
-      display: block;
+      width: 100%;
       margin: 10px 0;
-      padding: 10px;
-      background-color: #444;
-      color: #eee;
-      border: none;
-      border-radius: 5px;
+      padding: 12px;
+      background-color: #292929;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #f0f0f0;
       cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s ease;
     }
     .choices button:hover {
-      background-color: #666;
+      background-color: #ff3366;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="game-container">
     <h1>Silence = Death</h1>
     <div class="stats">
-      🗣️ Visibility: <span id="visibility">0</span> |
-      🧡 Community: <span id="community">0</span> |
-      🏛️ Impact: <span id="impact">0</span>
+      <div>🗣️ Visibility: <span id="visibility">0</span></div>
+      <div>🧡 Community: <span id="community">0</span></div>
+      <div>🏛️ Impact: <span id="impact">0</span></div>
     </div>
-    <div id="scene-text"></div>
+    <div class="scene" id="scene-text"></div>
     <div class="choices" id="choices"></div>
   </div>
 
   <script>
     const scenes = [
       {
-        text: "📰 *1981*: Reports of a mysterious illness are spreading in your community.",
+        text: "📰 1981: Reports of a mysterious illness are spreading in your community. Your friend is sick.",
         choices: [
-          { text: "Speak up at a local meeting.", effects: { visibility: 2, impact: 1, community: -1 } },
-          { text: "Say nothing and wait.", effects: { community: 1 } }
+          { text: "Take him to the hospital and demand answers.", effects: { visibility: 2, impact: 2, community: -1 } },
+          { text: "Help him quietly and avoid the stigma.", effects: { community: 2 } }
         ]
       },
       {
-        text: "📢 *1987*: ACT UP invites you to a protest at the FDA.",
+        text: "📢 1987: ACT UP invites you to a protest. Media attention is likely.",
         choices: [
-          { text: "Join the protest.", effects: { visibility: 2, impact: 2, community: -1 } },
-          { text: "Support quietly from home.", effects: { community: 2, visibility: -1 } }
+          { text: "Speak on camera about your experience.", effects: { visibility: 3, impact: 2, community: -2 } },
+          { text: "Hold a banner at the protest but stay anonymous.", effects: { visibility: 1, community: 1 } },
+          { text: "Stay home and write letters to senators.", effects: { impact: 2 } }
         ]
       },
       {
-        text: "⚰️ *1990*: Your best friend dies. His family wants to hide the cause.",
+        text: "🎭 1990: You're invited to create a memorial art piece for friends who died of AIDS.",
         choices: [
-          { text: "Respect the family’s wishes.", effects: { community: 2, visibility: -1 } },
-          { text: "Speak out about AIDS at the funeral.", effects: { visibility: 2, impact: 1, community: -1 } }
+          { text: "Make a bold public installation.", effects: { visibility: 2, impact: 3, community: 1 } },
+          { text: "Submit a private poem.", effects: { community: 2, impact: 1 } }
+        ]
+      },
+      {
+        text: "⚖️ 1993: A local law discriminates against people with HIV. You can testify at city hall.",
+        choices: [
+          { text: "Testify with your personal story.", effects: { visibility: 2, impact: 2, community: -1 } },
+          { text: "Organize others to speak while you coordinate from behind the scenes.", effects: { community: 2, impact: 2 } }
         ]
       }
     ];
@@ -74,7 +108,7 @@
     let currentScene = 0;
     let stats = { visibility: 0, community: 0, impact: 0 };
 
-    function updateStatsDisplay() {
+    function updateStats() {
       document.getElementById("visibility").textContent = stats.visibility;
       document.getElementById("community").textContent = stats.community;
       document.getElementById("impact").textContent = stats.impact;
@@ -97,28 +131,27 @@
           if (currentScene < scenes.length) {
             showScene();
           } else {
-            showEndScreen();
+            showEnding();
           }
-          updateStatsDisplay();
+          updateStats();
         };
         choicesDiv.appendChild(button);
       });
     }
 
-    function showEndScreen() {
-      let message = "<h2>Your Legacy</h2><p>You lived through a time of loss and resistance.</p>";
+    function showEnding() {
+      let ending = "<h2>Your Legacy</h2><p>You lived through loss, resilience, and resistance.</p>";
+      if (stats.visibility >= 6) ending += "<p>You became a visible face of activism, changing minds across the nation.</p>";
+      if (stats.community >= 6) ending += "<p>You were a quiet force, nurturing and protecting your chosen family.</p>";
+      if (stats.impact >= 6) ending += "<p>Your actions influenced policy and inspired future generations.</p>";
+      if (stats.visibility < 4 && stats.community < 4 && stats.impact < 4)
+        ending += "<p>Your contributions were small but still meaningful. Survival was its own form of resistance.</p>";
 
-      if (stats.visibility >= 5) message += "<p>You were a powerful public voice in the crisis.</p>";
-      else if (stats.community >= 5) message += "<p>You protected your community quietly but deeply.</p>";
-      else if (stats.impact >= 5) message += "<p>You helped change public policy and awareness.</p>";
-      else message += "<p>You did your best to survive—and that was enough.</p>";
-
-      document.getElementById("scene-text").innerHTML = message;
+      document.getElementById("scene-text").innerHTML = ending;
       document.getElementById("choices").innerHTML = "<p>Thank you for playing.</p>";
     }
 
-    // Start the game
-    updateStatsDisplay();
+    updateStats();
     showScene();
   </script>
 </body>
