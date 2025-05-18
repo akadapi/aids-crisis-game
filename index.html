@@ -27,7 +27,7 @@
       max-width: 700px;
       box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
     }
-    h1 {
+    h1, h2 {
       text-align: center;
       color: #ff3366;
     }
@@ -44,7 +44,7 @@
       margin-bottom: 20px;
       font-size: 18px;
     }
-    .choices button {
+    .choices button, .start-button {
       width: 100%;
       margin: 10px 0;
       padding: 12px;
@@ -56,59 +56,94 @@
       font-size: 16px;
       transition: 0.3s ease;
     }
-    .choices button:hover {
+    .choices button:hover, .start-button:hover {
       background-color: #ff3366;
       color: white;
+    }
+    .intro, .character-selection {
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
   <div class="game-container">
     <h1>Silence = Death</h1>
-    <div class="stats">
-      <div>🗣️ Visibility: <span id="visibility">0</span></div>
-      <div>🧡 Community: <span id="community">0</span></div>
-      <div>🏛️ Impact: <span id="impact">0</span></div>
+    <div id="intro-section" class="intro">
+      <p>This game is inspired by the activism of the AIDS crisis in the 1980s–1990s, particularly the efforts of groups like ACT UP, which fought for medical access, public awareness, and government response. The phrase "Silence = Death" became a powerful rallying cry, emphasizing how inaction and stigma cost lives.</p>
+      <p>Choose a character to see how different identities navigated the crisis:</p>
+      <div class="character-selection">
+        <button class="start-button" onclick="startGame('activist')">🌈 Activist (young gay man in NYC)</button>
+        <button class="start-button" onclick="startGame('nurse')">🩺 Nurse (queer healthcare worker)</button>
+        <button class="start-button" onclick="startGame('mother')">👩 Mother (lost son to AIDS)</button>
+      </div>
     </div>
-    <div class="scene" id="scene-text"></div>
-    <div class="choices" id="choices"></div>
+
+    <div id="game-section" style="display: none;">
+      <div class="stats">
+        <div>🗣️ Visibility: <span id="visibility">0</span></div>
+        <div>🧡 Community: <span id="community">0</span></div>
+        <div>🏛️ Impact: <span id="impact">0</span></div>
+      </div>
+      <div class="scene" id="scene-text"></div>
+      <div class="choices" id="choices"></div>
+    </div>
   </div>
 
   <script>
-    const scenes = [
-      {
-        text: "📰 1981: Reports of a mysterious illness are spreading in your community. Your friend is sick.",
-        choices: [
-          { text: "Take him to the hospital and demand answers.", effects: { visibility: 2, impact: 2, community: -1 } },
-          { text: "Help him quietly and avoid the stigma.", effects: { community: 2 } }
-        ]
-      },
-      {
-        text: "📢 1987: ACT UP invites you to a protest. Media attention is likely.",
-        choices: [
-          { text: "Speak on camera about your experience.", effects: { visibility: 3, impact: 2, community: -2 } },
-          { text: "Hold a banner at the protest but stay anonymous.", effects: { visibility: 1, community: 1 } },
-          { text: "Stay home and write letters to senators.", effects: { impact: 2 } }
-        ]
-      },
-      {
-        text: "🎭 1990: You're invited to create a memorial art piece for friends who died of AIDS.",
-        choices: [
-          { text: "Make a bold public installation.", effects: { visibility: 2, impact: 3, community: 1 } },
-          { text: "Submit a private poem.", effects: { community: 2, impact: 1 } }
-        ]
-      },
-      {
-        text: "⚖️ 1993: A local law discriminates against people with HIV. You can testify at city hall.",
-        choices: [
-          { text: "Testify with your personal story.", effects: { visibility: 2, impact: 2, community: -1 } },
-          { text: "Organize others to speak while you coordinate from behind the scenes.", effects: { community: 2, impact: 2 } }
-        ]
-      }
-    ];
+    const scenesByCharacter = {
+      activist: [
+        {
+          text: "📰 1981: Your friend is one of the first diagnosed. There's panic, and no one will help.",
+          choices: [
+            { text: "Take to the streets and raise awareness.", effects: { visibility: 2, impact: 2, community: -1 } },
+            { text: "Care for him quietly at home.", effects: { community: 2 } }
+          ]
+        },
+        {
+          text: "📢 ACT UP is planning a die-in. You’re asked to help organize.",
+          choices: [
+            { text: "Organize the protest and speak.", effects: { visibility: 3, impact: 2, community: -1 } },
+            { text: "Join the protest but stay masked.", effects: { visibility: 1, community: 1 } }
+          ]
+        }
+      ],
+      nurse: [
+        {
+          text: "🏥 1982: You’re a nurse at a hospital refusing to treat AIDS patients.",
+          choices: [
+            { text: "Speak out against the hospital policies.", effects: { visibility: 2, impact: 2 } },
+            { text: "Care for patients in secret.", effects: { community: 2 } }
+          ]
+        },
+        {
+          text: "📋 You’re asked to give testimony about patient neglect.",
+          choices: [
+            { text: "Testify in uniform.", effects: { visibility: 2, impact: 3 } },
+            { text: "Provide anonymous written testimony.", effects: { impact: 2 } }
+          ]
+        }
+      ],
+      mother: [
+        {
+          text: "🖼️ 1986: Your son passed away. You’re asked to join a remembrance quilt.",
+          choices: [
+            { text: "Sew a public square with his story.", effects: { visibility: 2, community: 2 } },
+            { text: "Write a private letter to his friends.", effects: { community: 2 } }
+          ]
+        },
+        {
+          text: "🎤 A local news crew asks you to share your story.",
+          choices: [
+            { text: "Speak openly about your son.", effects: { visibility: 3, impact: 2 } },
+            { text: "Decline, but write an op-ed.", effects: { impact: 2 } }
+          ]
+        }
+      ]
+    };
 
     let currentScene = 0;
     let stats = { visibility: 0, community: 0, impact: 0 };
+    let selectedCharacter = null;
 
     function updateStats() {
       document.getElementById("visibility").textContent = stats.visibility;
@@ -117,6 +152,7 @@
     }
 
     function showScene() {
+      const scenes = scenesByCharacter[selectedCharacter];
       const scene = scenes[currentScene];
       document.getElementById("scene-text").innerHTML = `<p>${scene.text}</p>`;
       const choicesDiv = document.getElementById("choices");
@@ -130,6 +166,7 @@
             stats[key] += choice.effects[key];
           }
           currentScene++;
+          const scenes = scenesByCharacter[selectedCharacter];
           if (currentScene < scenes.length) {
             showScene();
           } else {
@@ -143,18 +180,23 @@
 
     function showEnding() {
       let ending = "<h2>Your Legacy</h2><p>You lived through loss, resilience, and resistance.</p>";
-      if (stats.visibility >= 6) ending += "<p>You became a visible face of activism, changing minds across the nation.</p>";
-      if (stats.community >= 6) ending += "<p>You were a quiet force, nurturing and protecting your chosen family.</p>";
-      if (stats.impact >= 6) ending += "<p>Your actions influenced policy and inspired future generations.</p>";
-      if (stats.visibility < 4 && stats.community < 4 && stats.impact < 4)
+      if (stats.visibility >= 4) ending += "<p>You became a visible face of activism, changing minds across the nation.</p>";
+      if (stats.community >= 4) ending += "<p>You were a quiet force, nurturing and protecting your chosen family.</p>";
+      if (stats.impact >= 4) ending += "<p>Your actions influenced policy and inspired future generations.</p>";
+      if (stats.visibility < 3 && stats.community < 3 && stats.impact < 3)
         ending += "<p>Your contributions were small but still meaningful. Survival was its own form of resistance.</p>";
 
       document.getElementById("scene-text").innerHTML = ending;
       document.getElementById("choices").innerHTML = "<p>Thank you for playing.</p>";
     }
 
-    updateStats();
-    showScene();
+    function startGame(character) {
+      selectedCharacter = character;
+      document.getElementById("intro-section").style.display = "none";
+      document.getElementById("game-section").style.display = "block";
+      updateStats();
+      showScene();
+    }
   </script>
 </body>
 </html>
