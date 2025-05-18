@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Silence = Death Game</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voices of the AIDS Crisis</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="intro">
-    <h1>Silence = Death: The AIDS Activism Game</h1>
-    <p>This game explores the choices of individuals during the AIDS crisis in the 1980s. Choose a character to see how their journey unfolds and how different choices affect their lives and activism.</p>
-    <button onclick="chooseCharacter('Activist')">Play as Activist</button>
-    <button onclick="chooseCharacter('Doctor')">Play as Doctor</button>
-    <button onclick="chooseCharacter('Politician')">Play as Politician</button>
+    <h1>Voices of the AIDS Crisis</h1>
+    <p>This interactive story explores the lives of individuals during the AIDS epidemic. Choose a character to begin your journey and make choices that reflect their challenges and experiences.</p>
+    <button onclick="chooseCharacter('activist')">Play as an Activist</button>
+    <button onclick="chooseCharacter('doctor')">Play as a Doctor</button>
+    <button onclick="chooseCharacter('politician')">Play as a Politician</button>
   </div>
 
-  <div id="game" class="hidden">
+  <div id="game" style="display: none;">
+    <div id="status">
+      <h2 id="characterName"></h2>
+      <p>Points: <span id="points">0</span></p>
+    </div>
     <div id="story"></div>
-    <div id="choices"></div>
+    <button id="choice1" onclick="nextStep(0)"></button>
+    <button id="choice2" onclick="nextStep(1)"></button>
   </div>
 
   <script src="script.js"></script>
