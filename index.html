@@ -5,11 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Voices of the AIDS Crisis</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('figure1.avif');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      text-align: center;
+    }
+    #intro, #game {
+      background: rgba(0, 0, 0, 0.7);
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 700px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 24px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #status {
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
   <div id="intro">
     <h1>Voices of the AIDS Crisis</h1>
-    <p>This interactive story explores the lives of individuals during the AIDS epidemic. Choose a character to begin your journey and make choices that reflect their challenges and experiences.</p>
+    <p>Explore the impact of the AIDS epidemic through the lens of an Activist, Doctor, or Politician. Your choices shape your journey and highlight the complexities faced during this crisis.</p>
     <button onclick="chooseCharacter('activist')">Play as an Activist</button>
     <button onclick="chooseCharacter('doctor')">Play as a Doctor</button>
     <button onclick="chooseCharacter('politician')">Play as a Politician</button>
@@ -20,11 +56,101 @@
       <h2 id="characterName"></h2>
       <p>Points: <span id="points">0</span></p>
     </div>
-    <div id="story"></div>
-    <button id="choice1" onclick="nextStep(0)"></button>
-    <button id="choice2" onclick="nextStep(1)"></button>
+    <div id="story" style="margin: 20px 0; font-size: 18px;"></div>
+    <div>
+      <button id="choice1" onclick="nextStep(0)"></button>
+      <button id="choice2" onclick="nextStep(1)"></button>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const stories = {
+      activist: [
+        { text: "You witness police brutality at an AIDS protest.", choices: ["Talk about it in the community to raise awareness (+1)", "Look away for safety (-1)"], effects: [1, -1] },
+        { text: "Your friend tests positive.", choices: ["Start a support group (+2)", "Distance yourself out of fear (-1)"], effects: [2, -1] },
+        { text: "You’re asked to speak at a rally.", choices: ["Speak up boldly (+2)", "Decline due to anxiety (-1)"], effects: [2, -1] },
+        { text: "You see misinformation online.", choices: ["Correct it publicly (+1)", "Ignore it (-1)"], effects: [1, -1] },
+        { text: "A law proposes cutting AIDS funding.", choices: ["Petition Congress (+2)", "Do nothing (0)"], effects: [2, 0] },
+        { text: "You’re burned out.", choices: ["Take a break to recover (+1)", "Keep pushing and crash (-1)"], effects: [1, -1] },
+        { text: "You’re invited to join an activist group.", choices: ["Join and organize (+1)", "Decline for now (0)"], effects: [1, 0] },
+        { text: "A local church bans AIDS victims.", choices: ["Protest with others (+1)", "Stay silent (-1)"], effects: [1, -1] },
+        { text: "Media wants your story.", choices: ["Share it (+1)", "Stay private (0)"], effects: [1, 0] },
+        { text: "The movement is growing.", choices: ["Train new activists (+1)", "Step back (0)"], effects: [1, 0] }
+      ],
+      doctor: [
+        { text: "You treat your first AIDS patient.", choices: ["Give full care (+2)", "Wear excessive gear (-1)"], effects: [2, -1] },
+        { text: "Colleagues spread fear.", choices: ["Educate them (+1)", "Stay quiet (0)"], effects: [1, 0] },
+        { text: "You’re offered a grant.", choices: ["Use it for AIDS research (+2)", "Reject it (0)"], effects: [2, 0] },
+        { text: "Patients fear judgment.", choices: ["Provide comfort (+1)", "Keep it clinical (0)"], effects: [1, 0] },
+        { text: "Hospital lacks resources.", choices: ["Advocate for supplies (+1)", "Accept shortage (-1)"], effects: [1, -1] },
+        { text: "You’re emotionally exhausted.", choices: ["See a therapist (+1)", "Ignore it (-1)"], effects: [1, -1] },
+        { text: "Parents refuse treatment for child.", choices: ["Try to reason (+1)", "Let them go (-1)"], effects: [1, -1] },
+        { text: "Nurses won’t assist.", choices: ["Train willing ones (+1)", "Work alone (-1)"], effects: [1, -1] },
+        { text: "You’re invited to speak at med school.", choices: ["Educate the next gen (+1)", "Decline (0)"], effects: [1, 0] },
+        { text: "Your work is recognized.", choices: ["Use platform to advocate (+2)", "Stay low-key (0)"], effects: [2, 0] }
+      ],
+      politician: [
+        { text: "A bill proposes AIDS research funding.", choices: ["Support it publicly (+2)", "Abstain (-1)"], effects: [2, -1] },
+        { text: "You’re warned against controversy.", choices: ["Ignore and lead (+1)", "Play it safe (-1)"], effects: [1, -1] },
+        { text: "LGBTQ+ groups want a meeting.", choices: ["Host them (+1)", "Deny (0)"], effects: [1, 0] },
+        { text: "You see discrimination in policy.", choices: ["Challenge it (+1)", "Let it pass (-1)"], effects: [1, -1] },
+        { text: "A media outlet asks about AIDS.", choices: ["Speak honestly (+1)", "Dodge the topic (0)"], effects: [1, 0] },
+        { text: "Your base is conservative.", choices: ["Educate them (+1)", "Cater to them (-1)"], effects: [1, -1] },
+        { text: "A protest erupts.", choices: ["Engage and listen (+1)", "Call for police (-1)"], effects: [1, -1] },
+        { text: "An opponent mocks your stance.", choices: ["Hold your ground (+1)", "Backtrack (-1)"], effects: [1, -1] },
+        { text: "You're asked to sponsor a new bill.", choices: ["Write bold policy (+2)", "Decline to lead (0)"], effects: [2, 0] },
+        { text: "The nation is watching.", choices: ["Deliver a uniting speech (+2)", "Remain silent (-1)"], effects: [2, -1] }
+      ]
+    };
+
+    let currentStory = [];
+    let step = 0;
+    let points = 0;
+    let character = "";
+
+    function chooseCharacter(c) {
+      character = c;
+      currentStory = stories[c];
+      step = 0;
+      points = 0;
+      document.getElementById("intro").style.display = "none";
+      document.getElementById("game").style.display = "block";
+      document.getElementById("characterName").innerText = `Character: ${c.charAt(0).toUpperCase() + c.slice(1)}`;
+      document.getElementById("points").innerText = points;
+      showStep();
+    }
+
+    function showStep() {
+      if (step >= currentStory.length) {
+        showEnding();
+        return;
+      }
+      const s = currentStory[step];
+      document.getElementById("story").innerText = s.text;
+      document.getElementById("choice1").innerText = s.choices[0];
+      document.getElementById("choice2").innerText = s.choices[1];
+    }
+
+    function nextStep(choiceIndex) {
+      points += currentStory[step].effects[choiceIndex];
+      document.getElementById("points").innerText = points;
+      step++;
+      showStep();
+    }
+
+    function showEnding() {
+      let ending = "";
+      if (points >= 15) {
+        ending = "Your efforts led to change and recognition. Historically, such actions contributed to better awareness and funding for AIDS research.";
+      } else if (points >= 8) {
+        ending = "You made a difference, but change was limited. This reflects the struggle of many who tried their best in a hostile system.";
+      } else {
+        ending = "You chose safety over impact. Many voices were lost to silence during this era, and silence often meant continued suffering.";
+      }
+      document.getElementById("story").innerText = ending;
+      document.getElementById("choice1").style.display = "none";
+      document.getElementById("choice2").style.display = "none";
+    }
+  </script>
 </body>
 </html>
