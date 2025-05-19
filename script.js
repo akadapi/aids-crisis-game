@@ -5,221 +5,154 @@ let score = 0;
 const stories = {
     activist: [
         {
-            question: "You hear about a protest forming in Central Park. Do you join?",
+            text: `It's 1987. The AIDS epidemic is devastating your community in New York. Friends are dying, and the government remains largely silent. You attend your first ACT UP meeting—a group of direct action protestors. You're nervous. One leader suggests a bold protest at the FDA to demand faster drug approval. It could get media attention, but also lead to arrests.\n\nDo you join the protest or focus on writing op-eds and raising awareness in safer ways?`,
             choices: [
-                { text: "Yes, I join the protest", points: 2 },
-                { text: "No, I stay home", points: 0 }
+                { text: "Join the protest", points: 3 },
+                { text: "Raise awareness through writing", points: 2 }
             ]
         },
         {
-            question: "Police begin to push back the crowd. Do you stay or retreat?",
+            text: `After participating in the FDA protest, you're contacted by a local newspaper reporter who wants an anonymous interview about life during the AIDS crisis. Sharing your story might humanize the issue—but it also means risking your privacy and possibly your job.\n\nDo you agree to the interview?`,
             choices: [
-                { text: "Stay and chant louder", points: 2 },
-                { text: "Retreat to safety", points: 1 }
+                { text: "Agree to the interview", points: 3 },
+                { text: "Decline and protect your anonymity", points: 1 }
             ]
         },
         {
-            question: "You’re offered a chance to speak at a rally. Do you accept?",
+            text: `You’ve been volunteering at an AIDS hospice, offering support to patients whose families have abandoned them. One patient is a former politician who voted against AIDS funding. Now he's dying alone. Your team asks if you'd be willing to sit with him in his final days.\n\nDo you choose compassion or stand on principle?`,
             choices: [
-                { text: "Yes, you speak out passionately", points: 2 },
-                { text: "No, public speaking isn’t for you", points: 0 }
+                { text: "Care for him despite his past", points: 3 },
+                { text: "Refuse to help due to his history", points: 1 }
             ]
         },
         {
-            question: "An anti-LGBTQ+ group confronts you. Do you engage or ignore?",
+            text: `Your protest work leads you to a controversial moment: your group wants to stage "die-ins" at Catholic churches to call out their opposition to safe sex education. Some members object, saying it's too extreme.\n\nDo you vote in favor of the action or propose an alternative?`,
             choices: [
-                { text: "Engage calmly with facts", points: 2 },
-                { text: "Walk away to avoid conflict", points: 1 }
+                { text: "Support the church protest", points: 3 },
+                { text: "Suggest a non-religious protest", points: 2 }
             ]
         },
         {
-            question: "A friend is arrested during a protest. Do you help bail them out?",
+            text: `You’re approached by a pharmaceutical company offering a speaking platform to activists—if you agree to moderate your tone. It’s a rare opportunity to speak publicly, but it may water down your message.\n\nDo you accept the offer or refuse?`,
             choices: [
-                { text: "Yes, you fundraise and support them", points: 2 },
-                { text: "No, you distance yourself", points: 0 }
+                { text: "Accept and try to influence from within", points: 2 },
+                { text: "Refuse and maintain integrity", points: 3 }
             ]
         },
         {
-            question: "You're asked to volunteer with ACT UP. Do you commit?",
+            text: `A fellow activist is arrested and charged unfairly after a protest turns chaotic. The community wants you to organize a legal defense fund and media campaign. It’s a lot of work, and you're already burned out.\n\nDo you lead the charge again?`,
             choices: [
-                { text: "Yes, fully involved", points: 2 },
-                { text: "Only attend a few meetings", points: 1 }
+                { text: "Lead the legal defense effort", points: 3 },
+                { text: "Support but take a step back", points: 2 }
             ]
         },
         {
-            question: "You hear about an AIDS patient refused care. Do you intervene?",
+            text: `You’re asked to help create a controversial art installation showing the faces of people lost to AIDS. The project will be placed on government buildings.\n\nDo you contribute?`,
             choices: [
-                { text: "Yes, publicly call it out", points: 2 },
-                { text: "Let it go", points: 0 }
+                { text: "Yes, art can spark awareness", points: 3 },
+                { text: "No, it's too confrontational", points: 1 }
             ]
         },
         {
-            question: "Media ignores your protest. Do you start your own zine?",
+            text: `You discover internal conflict in your group: racial and gender minorities feel sidelined. They ask for structural change.\n\nDo you help push for a more inclusive structure?`,
             choices: [
-                { text: "Yes, spread awareness", points: 2 },
-                { text: "No, too much effort", points: 0 }
+                { text: "Yes, equity matters", points: 3 },
+                { text: "Stay neutral to avoid division", points: 1 }
             ]
         },
         {
-            question: "You're exhausted. Do you take a break?",
+            text: `A national news outlet wants you on air to talk about AIDS activism. They ask for soundbites and a scripted message.\n\nDo you speak your truth, or play along for the platform?`,
             choices: [
-                { text: "Yes, self-care is activism", points: 2 },
-                { text: "No, keep pushing until you collapse", points: 1 }
+                { text: "Speak truthfully, even if risky", points: 3 },
+                { text: "Follow the script", points: 2 }
             ]
         },
         {
-            question: "Years later, you’re invited to speak on your activism. Do you go?",
+            text: `Your closest friend is diagnosed. They ask for your help telling their conservative family.\n\nDo you support them through the conversation, or recommend they keep it quiet for safety?`,
             choices: [
-                { text: "Yes, honor the legacy", points: 2 },
-                { text: "No, you want to move on", points: 0 }
+                { text: "Support them and face the family", points: 3 },
+                { text: "Advise silence for protection", points: 1 }
             ]
         }
     ],
-    nurse: [
+
+    ally: [
         {
-            question: "You're assigned a patient with AIDS. Do you accept?",
+            text: `You're a university student in 1985. One of your professors, who is openly gay, is being targeted by conservative groups claiming he “promotes immoral behavior.” Most students stay silent. The campus LGBTQ+ group asks you to speak in his defense at a rally.\n\nDo you risk your reputation to support him?`,
             choices: [
-                { text: "Yes, with empathy", points: 2 },
-                { text: "No, request reassignment", points: 0 }
-            ]
-        },
-        {
-            question: "The hospital lacks protective gear. Do you speak up?",
-            choices: [
-                { text: "Yes, file a complaint", points: 2 },
+                { text: "Speak at the rally", points: 3 },
+                { text: "Support quietly by attending", points: 2 },
                 { text: "Stay silent", points: 0 }
             ]
         },
         {
-            question: "A patient is scared and alone. Do you comfort them?",
+            text: `Your roommate recently came out as HIV positive. Rumors spread quickly in your dorm, and others are pressuring you to request a new roommate. You feel torn between friendship and fear.\n\nDo you request a room change or defend your roommate publicly?`,
             choices: [
-                { text: "Yes, talk and listen", points: 2 },
-                { text: "Keep interactions minimal", points: 0 }
+                { text: "Defend them and stay", points: 3 },
+                { text: "Move out quietly", points: 1 }
             ]
         },
         {
-            question: "Coworkers mock AIDS patients. Do you intervene?",
+            text: `You’ve been asked to help fundraise for an AIDS support center. Your parents disapprove, saying it’s “not your fight.”\n\nDo you continue with the fundraiser or step back to maintain peace at home?`,
             choices: [
-                { text: "Yes, educate them", points: 2 },
-                { text: "Avoid conflict", points: 1 }
+                { text: "Keep fundraising", points: 3 },
+                { text: "Step back to appease them", points: 1 }
             ]
         },
         {
-            question: "You're invited to speak at a medical seminar. Go?",
+            text: `You're offered an internship with a major politician, but discover they’ve voted against AIDS funding and LGBTQ+ protections.\n\nDo you confront them or take the opportunity and try to influence from within?`,
             choices: [
-                { text: "Yes, share your experience", points: 2 },
-                { text: "Decline, public speaking isn’t for you", points: 0 }
+                { text: "Confront or decline the offer", points: 3 },
+                { text: "Accept and try to influence", points: 2 }
             ]
         },
         {
-            question: "You're offered a chance to write about your experience. Accept?",
+            text: `An LGBTQ+ friend asks you to accompany them to a funeral where their partner is not welcome.\n\nDo you attend with them and support their right to grieve?`,
             choices: [
-                { text: "Yes, tell your story", points: 2 },
-                { text: "No, prefer privacy", points: 0 }
+                { text: "Yes, stand by them", points: 3 },
+                { text: "No, it might cause conflict", points: 1 }
             ]
         },
         {
-            question: "Your shift is over, but a patient is fading. Stay?",
+            text: `A classmate makes a cruel joke about AIDS in a lecture. The professor ignores it.\n\nDo you speak up or let it pass to avoid confrontation?`,
             choices: [
-                { text: "Stay and comfort them", points: 2 },
-                { text: "Leave, you’re exhausted", points: 1 }
+                { text: "Speak up in class", points: 3 },
+                { text: "Talk to the professor later", points: 2 },
+                { text: "Say nothing", points: 0 }
             ]
         },
         {
-            question: "You’re asked to help train new nurses. Do you help?",
+            text: `You’re invited to volunteer at an AIDS memorial quilt event, but it overlaps with your exam schedule.\n\nDo you try to do both, prioritize school, or the cause?`,
             choices: [
-                { text: "Yes, it’s important", points: 2 },
-                { text: "No, you’re overwhelmed", points: 0 }
+                { text: "Prioritize the event", points: 3 },
+                { text: "Try to balance both", points: 2 }
             ]
         },
         {
-            question: "Years later, your story is part of a museum exhibit. Contribute?",
+            text: `A friend is being harassed for being openly gay. You see the bullying happen.\n\nDo you step in and risk becoming a target, or stay out of it?`,
             choices: [
-                { text: "Yes, to honor patients", points: 2 },
-                { text: "Decline, too personal", points: 0 }
+                { text: "Intervene", points: 3 },
+                { text: "Report it anonymously", points: 2 },
+                { text: "Do nothing", points: 0 }
             ]
         },
         {
-            question: "You’re invited to meet with a politician about health reform. Attend?",
+            text: `You’re helping at a blood drive, and learn that gay men are being denied the right to donate.\n\nDo you raise awareness and protest the policy?`,
             choices: [
-                { text: "Yes, advocate for change", points: 2 },
-                { text: "No, skeptical of politics", points: 1 }
-            ]
-        }
-    ],
-    journalist: [
-        {
-            question: "You hear rumors about a virus affecting gay men. Investigate?",
-            choices: [
-                { text: "Yes, write a story", points: 2 },
-                { text: "Ignore it for now", points: 0 }
+                { text: "Yes, protest the policy", points: 3 },
+                { text: "No, just follow the rules", points: 0 }
             ]
         },
         {
-            question: "Your editor says it's too controversial. Push back?",
+            text: `You’re asked to write an article about the AIDS crisis for the school paper. You have to choose between a personal story and a statistical summary.\n\nWhat do you write?`,
             choices: [
-                { text: "Yes, insist on publishing", points: 2 },
-                { text: "Back down", points: 0 }
-            ]
-        },
-        {
-            question: "Sources want anonymity. Respect that?",
-            choices: [
-                { text: "Yes, protect them", points: 2 },
-                { text: "Pressure them", points: 0 }
-            ]
-        },
-        {
-            question: "You’re offered a bigger platform. Take it?",
-            choices: [
-                { text: "Yes, spread awareness", points: 2 },
-                { text: "Stay local", points: 0 }
-            ]
-        },
-        {
-            question: "Another journalist is discredited for their AIDS coverage. Defend them?",
-            choices: [
-                { text: "Yes, publicly support", points: 2 },
-                { text: "Stay quiet", points: 1 }
-            ]
-        },
-        {
-            question: "You uncover hospital neglect. Expose it?",
-            choices: [
-                { text: "Yes, break the story", points: 2 },
-                { text: "No, fear backlash", points: 0 }
-            ]
-        },
-        {
-            question: "You’re asked to interview grieving families. Do it?",
-            choices: [
-                { text: "Yes, with care", points: 2 },
-                { text: "No, it's too hard", points: 0 }
-            ]
-        },
-        {
-            question: "You’re accused of bias. How do you respond?",
-            choices: [
-                { text: "Defend your work with facts", points: 2 },
-                { text: "Let it go", points: 0 }
-            ]
-        },
-        {
-            question: "You have a chance to publish a book. Accept?",
-            choices: [
-                { text: "Yes, share the truth", points: 2 },
-                { text: "No, avoid attention", points: 0 }
-            ]
-        },
-        {
-            question: "Your work is nominated for a journalism award. Accept?",
-            choices: [
-                { text: "Yes, honor the stories", points: 2 },
-                { text: "Decline the spotlight", points: 0 }
+                { text: "A personal, emotional story", points: 3 },
+                { text: "A neutral, statistical report", points: 2 }
             ]
         }
     ]
 };
+
 
 function selectCharacter(character) {
     playerCharacter = character;
