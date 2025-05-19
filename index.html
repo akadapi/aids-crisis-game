@@ -56,9 +56,9 @@
 <body>
   <div id="intro">
     <h1>Voices of the AIDS Crisis</h1>
-    <p>Explore the impact of the AIDS epidemic through personal experiences. Your choices shape your journey and highlight the complexities faced during this crisis.</p>
-    <button onclick="selectCharacter('activist')">Play as an Activist</button>
-    <button onclick="selectCharacter('ally')">Play as an Ally</button>
+    <p>Step into the shoes of those who lived through the AIDS epidemic of the 1980s and early 1990s. Your choices will shape your experience and show how everyday decisions had life-or-death consequences during this overlooked chapter of history.</p>
+    <button onclick="selectCharacter('activist')">Be an Activist</button>
+    <button onclick="selectCharacter('ally')">Be an Ally</button>
   </div>
 
   <div id="game" style="display: none;">
@@ -84,149 +84,149 @@
     const stories = {
       activist: [
         {
-          question: "It's 1987. The AIDS epidemic is devastating your community in New York. Friends are dying, and the government remains largely silent. You attend your first ACT UP meeting—a group of direct action protestors. You're nervous. One leader suggests a bold protest at the FDA to demand faster drug approval. It could get media attention, but also lead to arrests.\n\nDo you join the protest or focus on writing op-eds and raising awareness in safer ways?",
+          question: "NYC, 1987. Your neighborhood is being ravaged by AIDS. Three friends died last month. The government? Radio silence. You're at your first ACT UP meeting in a smoky community center. People are angry. Someone suggests storming the FDA to demand they approve drugs faster. \"We need to make noise. Get arrested if we have to.\" But others want to write op-eds instead.\n\nWhat's your move?",
           choices: [
-            { text: "Join the protest", points: 3 },
-            { text: "Raise awareness through writing", points: 2 }
+            { text: "Hell yeah, I'm joining that protest", points: 3 },
+            { text: "I'll write something powerful instead", points: 2 }
           ]
         },
         {
-          question: "After participating in the FDA protest, you're contacted by a local newspaper reporter who wants an anonymous interview about life during the AIDS crisis. Sharing your story might humanize the issue—but it also means risking your privacy and possibly your job.\n\nDo you agree to the interview?",
+          question: "After the FDA protest made the papers, a reporter calls. \"I want to tell your story - anonymously of course. Put a human face on this thing.\" You know this could help people understand what's happening, but your boss watches the local news religiously. Your job isn't exactly secure.\n\nDo you talk to the reporter?",
           choices: [
-            { text: "Agree to the interview", points: 3 },
-            { text: "Decline and protect your anonymity", points: 1 }
+            { text: "Share my story - people need to hear this", points: 3 },
+            { text: "Too risky - I can't lose my job right now", points: 1 }
           ]
         },
         {
-          question: "You've been volunteering at an AIDS hospice, offering support to patients whose families have abandoned them. One patient is a former politician who voted against AIDS funding. Now he's dying alone. Your team asks if you'd be willing to sit with him in his final days.\n\nDo you choose compassion or stand on principle?",
+          question: "You've been helping out at a hospice on weekends. The nurse pulls you aside. \"That new patient in Room 4? He used to be a state rep who voted against every AIDS bill. Now his family's disowned him and he's dying alone.\" She needs someone to sit with him tonight.\n\nWhat do you do?",
           choices: [
-            { text: "Care for him despite his past", points: 3 },
-            { text: "Refuse to help due to his history", points: 1 }
+            { text: "I'll sit with him. Nobody should die alone", points: 3 },
+            { text: "Find someone else. He made his bed", points: 1 }
           ]
         },
         {
-          question: "Your protest work leads you to a controversial moment: your group wants to stage \"die-ins\" at Catholic churches to call out their opposition to safe sex education. Some members object, saying it's too extreme.\n\nDo you vote in favor of the action or propose an alternative?",
+          question: "Tuesday night meeting. Tensions are high. Half the group wants to stage die-ins at St. Patrick's Cathedral to protest the church's stance against condoms and safe sex education. \"We need to be bold!\" someone shouts. Others think it's disrespectful.\n\nWhere do you stand?",
           choices: [
-            { text: "Support the church protest", points: 3 },
-            { text: "Suggest a non-religious protest", points: 2 }
+            { text: "The church needs to face what they're doing", points: 3 },
+            { text: "Let's target City Hall instead", points: 2 }
           ]
         },
         {
-          question: "You're approached by a pharmaceutical company offering a speaking platform to activists—if you agree to moderate your tone. It's a rare opportunity to speak publicly, but it may water down your message.\n\nDo you accept the offer or refuse?",
+          question: "You get a call from Merck. \"We admire your passion. We'd like you to speak at our conference - just tone down the rhetoric a bit.\" It's a huge platform, but they clearly want to control the message.\n\nDo you take their offer?",
           choices: [
-            { text: "Accept and try to influence from within", points: 2 },
-            { text: "Refuse and maintain integrity", points: 3 }
+            { text: "I'll work the system from inside", points: 2 },
+            { text: "No way I'm being their token activist", points: 3 }
           ]
         },
         {
-          question: "A fellow activist is arrested and charged unfairly after a protest turns chaotic. The community wants you to organize a legal defense fund and media campaign. It's a lot of work, and you're already burned out.\n\nDo you lead the charge again?",
+          question: "Mike got arrested at the hospital protest. The charges are BS - cops planted evidence. Everyone's looking at you to organize his defense fund and media campaign. You haven't slept properly in weeks and your own health isn't great.\n\nCan you take this on too?",
           choices: [
-            { text: "Lead the legal defense effort", points: 3 },
-            { text: "Support but take a step back", points: 2 }
+            { text: "I'll find the energy somehow", points: 3 },
+            { text: "I'll help but someone else needs to lead", points: 2 }
           ]
         },
         {
-          question: "You're asked to help create a controversial art installation showing the faces of people lost to AIDS. The project will be placed on government buildings.\n\nDo you contribute?",
+          question: "Late night call from the arts collective. \"We're planning to project faces of people who've died onto government buildings. With their names and stories. It's not exactly legal.\" They need more photos and testimonials.\n\nAre you in?",
           choices: [
-            { text: "Yes, art can spark awareness", points: 3 },
-            { text: "No, it's too confrontational", points: 1 }
+            { text: "Count me in - art can wake people up", points: 3 },
+            { text: "Too risky - we need to work within the system", points: 1 }
           ]
         },
         {
-          question: "You discover internal conflict in your group: racial and gender minorities feel sidelined. They ask for structural change.\n\nDo you help push for a more inclusive structure?",
+          question: "After the meeting, a group of women and people of color corner you. \"This movement is still all about white gay men,\" they tell you. \"We need to restructure leadership or we're walking.\" Some of your friends think they're being divisive.\n\nYour response?",
           choices: [
-            { text: "Yes, equity matters", points: 3 },
-            { text: "Stay neutral to avoid division", points: 1 }
+            { text: "They're right - let's change our structure", points: 3 },
+            { text: "Now's not the time for internal politics", points: 1 }
           ]
         },
         {
-          question: "A national news outlet wants you on air to talk about AIDS activism. They ask for soundbites and a scripted message.\n\nDo you speak your truth, or play along for the platform?",
+          question: "CNN wants you on Crossfire to talk about the epidemic. Their producer calls: \"We need you to stick to these talking points. Keep it brief, avoid blaming specific officials.\" You know that's not the full story.\n\nWhat will you do on air?",
           choices: [
-            { text: "Speak truthfully, even if risky", points: 3 },
-            { text: "Follow the script", points: 2 }
+            { text: "Say what needs to be said, scripted or not", points: 3 },
+            { text: "Follow their script - at least I'll get airtime", points: 2 }
           ]
         },
         {
-          question: "Your closest friend is diagnosed. They ask for your help telling their conservative family.\n\nDo you support them through the conversation, or recommend they keep it quiet for safety?",
+          question: "Your roommate sits you down. Eyes red. \"I tested positive. I need to tell my parents but they're super religious. They don't even know I'm gay.\" He looks terrified.\n\nWhat do you tell him?",
           choices: [
-            { text: "Support them and face the family", points: 3 },
-            { text: "Advise silence for protection", points: 1 }
+            { text: "I'll go with you when you tell them", points: 3 },
+            { text: "Maybe wait until you're symptomatic", points: 1 }
           ]
         }
       ],
 
       ally: [
         {
-          question: "You're a university student in 1985. One of your professors, who is openly gay, is being targeted by conservative groups claiming he \"promotes immoral behavior.\" Most students stay silent. The campus LGBTQ+ group asks you to speak in his defense at a rally.\n\nDo you risk your reputation to support him?",
+          question: "College, 1985. That cool English professor everyone loves? The one who's openly gay? Some campus religious group is trying to get him fired for \"promoting an immoral lifestyle.\" Most students just walk past their protest. The campus LGBTQ+ group is holding a counter-rally. They ask if you'll speak.\n\nWhat do you do?",
           choices: [
-            { text: "Speak at the rally", points: 3 },
-            { text: "Support quietly by attending", points: 2 },
-            { text: "Stay silent", points: 0 }
+            { text: "I'll speak - someone needs to stand up", points: 3 },
+            { text: "I'll attend but not speak", points: 2 },
+            { text: "Better stay out of it", points: 0 }
           ]
         },
         {
-          question: "Your roommate recently came out as HIV positive. Rumors spread quickly in your dorm, and others are pressuring you to request a new roommate. You feel torn between friendship and fear.\n\nDo you request a room change or defend your roommate publicly?",
+          question: "Your roommate just told you he's HIV positive. Word spreads fast in the dorms. People are giving you weird looks in the bathroom. Your RA pulls you aside: \"I can get you moved to another room, no questions asked.\" Your roommate doesn't know about this conversation.\n\nWhat's your next move?",
           choices: [
-            { text: "Defend them and stay", points: 3 },
-            { text: "Move out quietly", points: 1 }
+            { text: "Tell the RA to back off - we're fine", points: 3 },
+            { text: "Take the room change quietly", points: 1 }
           ]
         },
         {
-          question: "You've been asked to help fundraise for an AIDS support center. Your parents disapprove, saying it's \"not your fight.\"\n\nDo you continue with the fundraiser or step back to maintain peace at home?",
+          question: "You signed up to help with an AIDS benefit concert. When your parents find out, they flip. \"Why are you involved with that? It's not your problem!\" Your dad threatens to cut off your spending money.\n\nDo you stay involved?",
           choices: [
-            { text: "Keep fundraising", points: 3 },
-            { text: "Step back to appease them", points: 1 }
+            { text: "Yes - they can't control my conscience", points: 3 },
+            { text: "Better back out for now", points: 1 }
           ]
         },
         {
-          question: "You're offered an internship with a major politician, but discover they've voted against AIDS funding and LGBTQ+ protections.\n\nDo you confront them or take the opportunity and try to influence from within?",
+          question: "Dream internship offer from Senator Miller's office! Then you discover he's voted against every AIDS funding bill and LGBTQ+ protection. Your friend with HIV says, \"Take it! Change things from inside.\"\n\nWhat do you choose?",
           choices: [
-            { text: "Confront or decline the offer", points: 3 },
-            { text: "Accept and try to influence", points: 2 }
+            { text: "Turn it down - I won't work for him", points: 3 },
+            { text: "Take it and try to make changes", points: 2 }
           ]
         },
         {
-          question: "An LGBTQ+ friend asks you to accompany them to a funeral where their partner is not welcome.\n\nDo you attend with them and support their right to grieve?",
+          question: "Your gay friend Mark calls in tears. His partner of 5 years just died from AIDS complications. The funeral is tomorrow, but the family told Mark he's not welcome - they're pretending their son was straight. Mark begs you to come with him anyway.\n\nWill you go?",
           choices: [
-            { text: "Yes, stand by them", points: 3 },
-            { text: "No, it might cause conflict", points: 1 }
+            { text: "I'll be right by his side", points: 3 },
+            { text: "Maybe we should respect the family's wishes", points: 1 }
           ]
         },
         {
-          question: "A classmate makes a cruel joke about AIDS in a lecture. The professor ignores it.\n\nDo you speak up or let it pass to avoid confrontation?",
+          question: "Biology class. Some jock in the back makes a loud joke: \"What's the hardest part about having AIDS? Trying to convince your mom you're Haitian!\" Everyone laughs. The professor just continues like nothing happened.\n\nWhat's your response?",
           choices: [
-            { text: "Speak up in class", points: 3 },
-            { text: "Talk to the professor later", points: 2 },
-            { text: "Say nothing", points: 0 }
+            { text: "Call him out right there", points: 3 },
+            { text: "Talk to the professor after class", points: 2 },
+            { text: "Best not to make a scene", points: 0 }
           ]
         },
         {
-          question: "You're invited to volunteer at an AIDS memorial quilt event, but it overlaps with your exam schedule.\n\nDo you try to do both, prioritize school, or the cause?",
+          question: "They're displaying the AIDS Memorial Quilt on campus next weekend. They desperately need volunteers. Problem is, it's during finals prep and you've got a huge exam Monday.\n\nHow do you handle this?",
           choices: [
-            { text: "Prioritize the event", points: 3 },
-            { text: "Try to balance both", points: 2 }
+            { text: "The quilt comes first - I'll cram later", points: 3 },
+            { text: "Help for a few hours, then study", points: 2 }
           ]
         },
         {
-          question: "A friend is being harassed for being openly gay. You see the bullying happen.\n\nDo you step in and risk becoming a target, or stay out of it?",
+          question: "You're grabbing lunch when you see three guys cornering your friend Tyler, calling him AIDS-related slurs. Tyler's gay but hasn't done anything to these jerks. Nobody else is stepping in.\n\nWhat do you do?",
           choices: [
-            { text: "Intervene", points: 3 },
-            { text: "Report it anonymously", points: 2 },
-            { text: "Do nothing", points: 0 }
+            { text: "Get between them and tell them to back off", points: 3 },
+            { text: "Find campus security", points: 2 },
+            { text: "Not my fight", points: 0 }
           ]
         },
         {
-          question: "You're helping at a blood drive, and learn that gay men are being denied the right to donate.\n\nDo you raise awareness and protest the policy?",
+          question: "You're volunteering at the campus blood drive when you overhear the staff turn away your openly gay classmate. \"CDC guidelines,\" they say. \"Men who have sex with men can't donate.\" Your classmate looks humiliated.\n\nHow do you respond?",
           choices: [
-            { text: "Yes, protest the policy", points: 3 },
-            { text: "No, just follow the rules", points: 0 }
+            { text: "Challenge this policy - it's discriminatory", points: 3 },
+            { text: "Say nothing - they're just following rules", points: 0 }
           ]
         },
         {
-          question: "You're asked to write an article about the AIDS crisis for the school paper. You have to choose between a personal story and a statistical summary.\n\nWhat do you write?",
+          question: "The editor of the campus paper asks you to write something about World AIDS Day. \"You have friends in that community, right? We need content by tomorrow.\"\n\nWhat kind of article do you write?",
           choices: [
-            { text: "A personal, emotional story", points: 3 },
-            { text: "A neutral, statistical report", points: 2 }
+            { text: "A personal story about my friend who died", points: 3 },
+            { text: "Just the facts and statistics", points: 2 }
           ]
         }
       ]
@@ -286,13 +286,13 @@
 
       let message = "";
       if (score >= 25) {
-        message = "You showed outstanding bravery and helped change the public narrative during the AIDS crisis.";
+        message = "You were a total badass. You put your body on the line when it mattered, and people's lives were saved because of people like you. History remembers the brave ones.";
       } else if (score >= 18) {
-        message = "You made meaningful contributions that likely saved lives, even if limited by fear or circumstance.";
+        message = "You did more than most. Not everyone can be on the front lines, but you showed up when it counted and made a real difference.";
       } else if (score >= 12) {
-        message = "You helped in small but significant ways, showing that every act of kindness matters.";
+        message = "You helped in your own way. Small acts of kindness and courage add up, even if they don't make the history books.";
       } else {
-        message = "You hesitated, and history remembers the silence too. But every choice reveals the difficulty of the time.";
+        message = "You played it safe when others took risks. It's human to be scared - but silence = death, as ACT UP would say.";
       }
 
       document.getElementById('ending-box').innerHTML = `
