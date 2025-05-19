@@ -286,4 +286,14 @@ function endGame() {
         <p>Final Score: ${score}</p>
         <p>${message}</p>
     `;
+
+    const playAgainButton = document.createElement('button');
+    playAgainButton.textContent = "Play Again";
+    playAgainButton.className = "choice-button";
+    playAgainButton.onclick = () => {
+        document.getElementById('character-box').style.display = 'block';
+        document.getElementById('ending-box').style.display = 'none';
+        document.getElementById('score-box').textContent = '';
+    };
+    document.getElementById('ending-box').appendChild(playAgainButton);
 }
